@@ -5,4 +5,6 @@ class ApplicationController < ActionController::Base
   def goodbye
     render html: "Goodbye, world!"
   end
+  
+  skip_before_action :verify_authenticity_token
 end

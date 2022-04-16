@@ -64,4 +64,7 @@ Rails.application.configure do
   config.action_dispatch.default_headers = {
     'X-Frame-Options' => 'ALLOWALL'
   }
+  
+  # Allow Cloud9 connections.
+  config.hosts.clear
 end
