@@ -6,5 +6,5 @@ class ApplicationController < ActionController::Base
     render html: "Goodbye, world!"
   end
   
-  skip_before_action :verify_authenticity_token
+  skip_forgery_protection
 end
