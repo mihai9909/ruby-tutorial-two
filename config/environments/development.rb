@@ -67,4 +67,6 @@ Rails.application.configure do
   
   # Allow Cloud9 connections.
   config.hosts.clear
+
+  config.reload_classes_only_on_change = false
 end
