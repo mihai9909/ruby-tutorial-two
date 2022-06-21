@@ -1,7 +1,53 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+  
 
+/* mixins, variables, etc. */
+$gray-medium-light: #eaeaea;
 $light-gray: #777;
+
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* forms */
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+#error_explanation {
+  color: red;
+  ul {
+    color: red;
+    margin: 0 0 30px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .has-error;
+  .form-control {
+  color: $state-danger-text;
+  }
+}
+  
+
+/* miscellaneous */
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
 
 
 /* universal */
@@ -9,15 +55,19 @@ $light-gray: #777;
 body {
   padding-top: 60px;
 }
+
 section {
   overflow: auto;
 }
+
 textarea {
   resize: vertical;
 }
+
 .center {
   text-align: center;
 }
+
 .center h1 {
   margin-bottom: 10px;
 }
