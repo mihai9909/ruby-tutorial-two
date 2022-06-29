@@ -32,5 +32,26 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
     get users_path
     assert_select 'a', text: 'delete', count: 0
   end
-    
+  
+
+  test "non-activated accounts should not appear on index and cannot be accessed" do
+    get signup_path
+    assert_difference 'User.count',1 do
+      post users_path, params: {  user:{name:"Example User",
+                                        email:"example@example.ex",
+                                        password: "example",
+                                        password_confirmation: "example"} }
+    end
+    follow_redirect!
+    assert_equal 1, ActionMailer::Base.deliveries.size
+    get login_path
+    log_in_as @non_admin
+    get users_path
+    assert_select 'a', text: "Example User", count: 0
+    user = User.find_by(email: "example@example.ex")
+    get user_path(user)
+    follow_redirect!
+    assert_template root_path
+    assert_select 'div.alert.alert-warning', 'User hasn\'t activated his account'
+  end
 end
