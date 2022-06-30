@@ -13,7 +13,7 @@ Rails.application.configure do
   # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  host = '<your heroku app>.herokuapp.com'
+  host = 'shrouded-spire-35303.herokuapp.com'
 
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
@@ -111,4 +111,6 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  config.action_mailer.default_url_options = { :host => host }
 end

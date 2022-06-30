@@ -60,10 +60,10 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   
-  config.hosts << "86b5d9d8e31a4d2c80758bf6b45fefdf.vfs.cloud9.us-east-1.amazonaws.com"
-  config.action_dispatch.default_headers = {
-    'X-Frame-Options' => 'ALLOWALL'
-  }
+  # config.hosts << "86b5d9d8e31a4d2c80758bf6b45fefdf.vfs.cloud9.us-east-1.amazonaws.com"
+  # config.action_dispatch.default_headers = {
+  #   'X-Frame-Options' => 'ALLOWALL'
+  # }
   
   # Allow Cloud9 connections.
   # config.hosts.clear
