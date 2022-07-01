@@ -24,7 +24,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      @user.send_activation_email
+      # @user.send_activation_email
+      send_mail
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
     else
@@ -53,6 +54,7 @@ class UsersController < ApplicationController
   end
 
   private
+  
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
     end
@@ -80,4 +82,16 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user.admin?
     end
 
+    # Sends request to emailjs API to send a confirmation email to the user
+    def send_mail
+      uri = URI("https://api.emailjs.com/api/v1.0/email/send")
+
+      response = HTTPX.post("https://api.emailjs.com/api/v1.0/email/send", :json => {'service_id' => 'default_service',
+      'template_id' => 'template_5eqjt4j',
+      'user_id' => 'RLpsZfhP-QdAf11kA',
+      'template_params' => {'to_email' => 'neagoimihai@gmail.com'},
+      'accessToken' => '8ZWXEhRPKr7yW6A0mA11i'
+      })
+      
+  end
 end
