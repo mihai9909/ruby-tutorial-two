@@ -35,6 +35,5 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
                                         password_confirmation: "example"} }
     end
     follow_redirect!
-    assert_equal 1, ActionMailer::Base.deliveries.size
   end
 end

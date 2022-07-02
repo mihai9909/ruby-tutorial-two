@@ -84,14 +84,11 @@ class UsersController < ApplicationController
 
     # Sends request to emailjs API to send a confirmation email to the user
     def send_mail
-      uri = URI("https://api.emailjs.com/api/v1.0/email/send")
-
       response = HTTPX.post("https://api.emailjs.com/api/v1.0/email/send", :json => {'service_id' => 'default_service',
       'template_id' => 'template_5eqjt4j',
       'user_id' => 'RLpsZfhP-QdAf11kA',
-      'template_params' => {'to_email' => 'neagoimihai@gmail.com'},
-      'accessToken' => '8ZWXEhRPKr7yW6A0mA11i'
+      'template_params' => {'to_email' => @user.email, 'message' => edit_account_activation_url(@user.activation_token, email: @user.email), 'to_name' => @user.name},
+      'accessToken' => ENV['EMAILJS_API_KEY']
       })
-      
   end
 end

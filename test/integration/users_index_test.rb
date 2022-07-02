@@ -43,7 +43,6 @@ class UsersIndexTest < ActionDispatch::IntegrationTest
                                         password_confirmation: "example"} }
     end
     follow_redirect!
-    assert_equal 1, ActionMailer::Base.deliveries.size
     get login_path
     log_in_as @non_admin
     get users_path
