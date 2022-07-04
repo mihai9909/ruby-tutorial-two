@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       # @user.send_activation_email
-      send_mail
+      send_activation_mail
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
     else
@@ -83,12 +83,12 @@ class UsersController < ApplicationController
     end
 
     # Sends request to emailjs API to send a confirmation email to the user
-    def send_mail
+    def send_activation_mail
       response = HTTPX.post("https://api.emailjs.com/api/v1.0/email/send", :json => {'service_id' => 'default_service',
       'template_id' => 'template_5eqjt4j',
       'user_id' => 'RLpsZfhP-QdAf11kA',
       'template_params' => {'to_email' => @user.email, 'message' => edit_account_activation_url(@user.activation_token, email: @user.email), 'to_name' => @user.name},
       'accessToken' => ENV['EMAILJS_API_KEY']
       })
-  end
+    end
 end
