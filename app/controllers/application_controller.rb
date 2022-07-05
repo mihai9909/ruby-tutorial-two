@@ -1,14 +1,16 @@
 class ApplicationController < ActionController::Base
-  
   include SessionsHelper
 
-  def hello
-    render 'layouts/home'
-  end
-
-  def goodbye
-    render html: "Goodbye, world!"
-  end
+  private
+    # Confirms a logged-in user.
+    def logged_in_user
+      unless logged_in?
+      store_location
+      flash[:danger] = "Please log in."
+      redirect_to login_url
+      end
+    end
+  
 
   skip_forgery_protection
 end
