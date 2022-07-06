@@ -17,8 +17,8 @@ User.create!(name: "Example User",
 
 User.create!(name: "Mihai Neagoi",
             email: "neagoimihai@gmail.com",
-            password: "Adrosu1234",
-            password_confirmation: "Adrosu1234",
+            password: "123456789",
+            password_confirmation: "123456789",
             admin: true,
             activated: true,
             activated_at: Time.zone.now)
@@ -41,3 +41,11 @@ users = User.order(:created_at).take(6)
   content = Faker::Lorem.sentence(word_count: 5)
   users.each { |user| user.microposts.create!(content: content) }
 end  
+
+# Create following relationships.
+users = User.all
+user = users.first
+following = users[2..50]
+followers = users[3..40]
+following.each { |followed| user.follow(followed) }
+followers.each { |follower| follower.follow(user) }

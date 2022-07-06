@@ -1,0 +1,12 @@
+one:
+  follower: mihaitza
+  followed: lana
+two:
+  follower: mihaitza
+  followed: malory
+three:
+  follower: lana
+  followed: mihaitza
+four:
+  follower: archer
+  followed: mihaitza
