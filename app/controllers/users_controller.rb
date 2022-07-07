@@ -8,6 +8,8 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+
+
   def index
     @users = User.where(activated: true).paginate(page: params[:page])
   end
@@ -40,7 +42,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
+    if @user.update(user_update_params)
       flash[:success] = "Profile updated"
       redirect_to @user
     else
@@ -72,6 +74,11 @@ class UsersController < ApplicationController
   
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    end
+
+    # can update only the name and password
+    def user_update_params
+      params.require(:user).permit(:name, :password, :password_confirmation)
     end
 
     # Before filters

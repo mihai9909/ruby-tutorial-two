@@ -65,9 +65,9 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  def feed
-    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
-    Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+  # Tells if the user has posted in the last 24 hours
+  def posted_today?
+    timestamp_of_last_post > 1.day.ago
   end
 
   # Follows a user.
@@ -85,6 +85,19 @@ class User < ApplicationRecord
     following.include?(other_user)
   end
 
+  def update_last_posted
+    update_attribute(:last_posted, Time.zone.now)
+  end
+
+  def feed
+    if posted_today?
+      following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+      Micropost.where("user_id IN (#{following_ids}) OR user_id = :user_id", user_id: id)
+    else
+      Micropost.where("user_id = :user_id", user_id: id)
+    end
+  end
+
   private
   # Converts email to all lower-case.
     def downcase_email
@@ -95,5 +108,13 @@ class User < ApplicationRecord
     def create_activation_digest
       self.activation_token = User.new_token
       self.activation_digest = User.digest(activation_token)
+    end
+
+    def timestamp_of_last_post
+      if m = Micropost.where("user_id = :user_id",user_id: id).first
+        m.created_at
+      else
+        2.days.ago
+      end
     end
 end
