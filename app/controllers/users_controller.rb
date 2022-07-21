@@ -15,7 +15,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    if (aux_user = User.find(params[:id])) && aux_user.activated?
+    if !logged_in?
+      flash[:warning] = 'Please log in!'
+      redirect_to root_url
+      return
+    end
+
+    if (aux_user = User.find(params[:id])) && aux_user.activated? 
       @user = aux_user
       @microposts = @user.microposts.paginate(page: params[:page])
     else
